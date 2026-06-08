@@ -1,123 +1,110 @@
-// Fixture completo del Mundial 2026 (fase de grupos)
-// Las fases eliminatorias se completan dinámicamente según resultados
+// Fixture REAL del Mundial 2026 (fase de grupos).
+// Fuentes: sorteo final FIFA (05/12/2025, verificado con Wikipedia) +
+// calendario de ESPN. Horarios convertidos a hora de Argentina (UTC-3),
+// guardados con offset -03:00 explicito para que el cierre de pronosticos
+// (1h antes) sea exacto sin importar la zona horaria del navegador.
+// Las banderas se resuelven por nombre de pais en src/lib/flags.js.
 
 export const PARTIDOS_GRUPOS = [
   // GRUPO A
-  { id: 1, fase: 'Grupos', grupo: 'A', local: 'México', flagLocal: '🇲🇽', visitante: 'Polonia', flagVisitante: '🇵🇱', fecha: '2026-06-11T20:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 2, fase: 'Grupos', grupo: 'A', local: 'Arabia Saudita', flagLocal: '🇸🇦', visitante: 'Argentina', flagVisitante: '🇦🇷', fecha: '2026-06-11T23:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 3, fase: 'Grupos', grupo: 'A', local: 'México', flagLocal: '🇲🇽', visitante: 'Argentina', flagVisitante: '🇦🇷', fecha: '2026-06-15T23:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 4, fase: 'Grupos', grupo: 'A', local: 'Polonia', flagLocal: '🇵🇱', visitante: 'Arabia Saudita', flagVisitante: '🇸🇦', fecha: '2026-06-15T20:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 5, fase: 'Grupos', grupo: 'A', local: 'Argentina', flagLocal: '🇦🇷', visitante: 'Polonia', flagVisitante: '🇵🇱', fecha: '2026-06-19T20:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 6, fase: 'Grupos', grupo: 'A', local: 'Arabia Saudita', flagLocal: '🇸🇦', visitante: 'México', flagVisitante: '🇲🇽', fecha: '2026-06-19T20:00:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
+  { id: 1, fase: 'Grupos', grupo: 'A', local: 'México', visitante: 'Sudáfrica', fecha: '2026-06-11T16:00:00-03:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
+  { id: 2, fase: 'Grupos', grupo: 'A', local: 'Corea del Sur', visitante: 'República Checa', fecha: '2026-06-11T23:00:00-03:00', estadio: 'Estadio Akron', ciudad: 'Guadalajara' },
+  { id: 3, fase: 'Grupos', grupo: 'A', local: 'República Checa', visitante: 'Sudáfrica', fecha: '2026-06-18T13:00:00-03:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
+  { id: 4, fase: 'Grupos', grupo: 'A', local: 'México', visitante: 'Corea del Sur', fecha: '2026-06-19T00:00:00-03:00', estadio: 'Estadio Akron', ciudad: 'Guadalajara' },
+  { id: 5, fase: 'Grupos', grupo: 'A', local: 'República Checa', visitante: 'México', fecha: '2026-06-24T22:00:00-03:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
+  { id: 6, fase: 'Grupos', grupo: 'A', local: 'Sudáfrica', visitante: 'Corea del Sur', fecha: '2026-06-24T22:00:00-03:00', estadio: 'Estadio BBVA', ciudad: 'Monterrey' },
 
   // GRUPO B
-  { id: 7, fase: 'Grupos', grupo: 'B', local: 'Francia', flagLocal: '🇫🇷', visitante: 'Australia', flagVisitante: '🇦🇺', fecha: '2026-06-12T17:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 8, fase: 'Grupos', grupo: 'B', local: 'Dinamarca', flagLocal: '🇩🇰', visitante: 'Túnez', flagVisitante: '🇹🇳', fecha: '2026-06-12T20:00:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
-  { id: 9, fase: 'Grupos', grupo: 'B', local: 'Francia', flagLocal: '🇫🇷', visitante: 'Dinamarca', flagVisitante: '🇩🇰', fecha: '2026-06-16T20:00:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
-  { id: 10, fase: 'Grupos', grupo: 'B', local: 'Túnez', flagLocal: '🇹🇳', visitante: 'Australia', flagVisitante: '🇦🇺', fecha: '2026-06-16T17:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 11, fase: 'Grupos', grupo: 'B', local: 'Australia', flagLocal: '🇦🇺', visitante: 'Dinamarca', flagVisitante: '🇩🇰', fecha: '2026-06-20T20:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
-  { id: 12, fase: 'Grupos', grupo: 'B', local: 'Túnez', flagLocal: '🇹🇳', visitante: 'Francia', flagVisitante: '🇫🇷', fecha: '2026-06-20T20:00:00', estadio: 'Levi\'s Stadium', ciudad: 'San Francisco' },
+  { id: 7, fase: 'Grupos', grupo: 'B', local: 'Canadá', visitante: 'Bosnia y Herzegovina', fecha: '2026-06-12T16:00:00-03:00', estadio: 'BMO Field', ciudad: 'Toronto' },
+  { id: 8, fase: 'Grupos', grupo: 'B', local: 'Qatar', visitante: 'Suiza', fecha: '2026-06-12T13:00:00-03:00', estadio: "Levi's Stadium", ciudad: 'San Francisco' },
+  { id: 9, fase: 'Grupos', grupo: 'B', local: 'Suiza', visitante: 'Bosnia y Herzegovina', fecha: '2026-06-18T16:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 10, fase: 'Grupos', grupo: 'B', local: 'Canadá', visitante: 'Qatar', fecha: '2026-06-18T19:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
+  { id: 11, fase: 'Grupos', grupo: 'B', local: 'Suiza', visitante: 'Canadá', fecha: '2026-06-24T16:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
+  { id: 12, fase: 'Grupos', grupo: 'B', local: 'Bosnia y Herzegovina', visitante: 'Qatar', fecha: '2026-06-24T16:00:00-03:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
 
   // GRUPO C
-  { id: 13, fase: 'Grupos', grupo: 'C', local: 'Brasil', flagLocal: '🇧🇷', visitante: 'Serbia', flagVisitante: '🇷🇸', fecha: '2026-06-13T17:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 14, fase: 'Grupos', grupo: 'C', local: 'Suiza', flagLocal: '🇨🇭', visitante: 'Camerún', flagVisitante: '🇨🇲', fecha: '2026-06-13T20:00:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
-  { id: 15, fase: 'Grupos', grupo: 'C', local: 'Brasil', flagLocal: '🇧🇷', visitante: 'Suiza', flagVisitante: '🇨🇭', fecha: '2026-06-17T20:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 16, fase: 'Grupos', grupo: 'C', local: 'Camerún', flagLocal: '🇨🇲', visitante: 'Serbia', flagVisitante: '🇷🇸', fecha: '2026-06-17T17:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 17, fase: 'Grupos', grupo: 'C', local: 'Brasil', flagLocal: '🇧🇷', visitante: 'Camerún', flagVisitante: '🇨🇲', fecha: '2026-06-21T20:00:00', estadio: 'Levi\'s Stadium', ciudad: 'San Francisco' },
-  { id: 18, fase: 'Grupos', grupo: 'C', local: 'Serbia', flagLocal: '🇷🇸', visitante: 'Suiza', flagVisitante: '🇨🇭', fecha: '2026-06-21T20:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
+  { id: 13, fase: 'Grupos', grupo: 'C', local: 'Brasil', visitante: 'Marruecos', fecha: '2026-06-13T19:00:00-03:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
+  { id: 14, fase: 'Grupos', grupo: 'C', local: 'Haití', visitante: 'Escocia', fecha: '2026-06-13T22:00:00-03:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 15, fase: 'Grupos', grupo: 'C', local: 'Escocia', visitante: 'Marruecos', fecha: '2026-06-19T19:00:00-03:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 16, fase: 'Grupos', grupo: 'C', local: 'Brasil', visitante: 'Haití', fecha: '2026-06-19T22:00:00-03:00', estadio: 'Lincoln Financial Field', ciudad: 'Filadelfia' },
+  { id: 17, fase: 'Grupos', grupo: 'C', local: 'Escocia', visitante: 'Brasil', fecha: '2026-06-24T19:00:00-03:00', estadio: 'Hard Rock Stadium', ciudad: 'Miami' },
+  { id: 18, fase: 'Grupos', grupo: 'C', local: 'Marruecos', visitante: 'Haití', fecha: '2026-06-24T19:00:00-03:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
 
   // GRUPO D
-  { id: 19, fase: 'Grupos', grupo: 'D', local: 'España', flagLocal: '🇪🇸', visitante: 'Costa Rica', flagVisitante: '🇨🇷', fecha: '2026-06-12T17:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 20, fase: 'Grupos', grupo: 'D', local: 'Alemania', flagLocal: '🇩🇪', visitante: 'Japón', flagVisitante: '🇯🇵', fecha: '2026-06-12T23:00:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
-  { id: 21, fase: 'Grupos', grupo: 'D', local: 'España', flagLocal: '🇪🇸', visitante: 'Alemania', flagVisitante: '🇩🇪', fecha: '2026-06-16T23:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 22, fase: 'Grupos', grupo: 'D', local: 'Japón', flagLocal: '🇯🇵', visitante: 'Costa Rica', flagVisitante: '🇨🇷', fecha: '2026-06-16T17:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 23, fase: 'Grupos', grupo: 'D', local: 'España', flagLocal: '🇪🇸', visitante: 'Japón', flagVisitante: '🇯🇵', fecha: '2026-06-20T20:00:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
-  { id: 24, fase: 'Grupos', grupo: 'D', local: 'Costa Rica', flagLocal: '🇨🇷', visitante: 'Alemania', flagVisitante: '🇩🇪', fecha: '2026-06-20T20:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 19, fase: 'Grupos', grupo: 'D', local: 'EE.UU.', visitante: 'Paraguay', fecha: '2026-06-12T22:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 20, fase: 'Grupos', grupo: 'D', local: 'Australia', visitante: 'Turquía', fecha: '2026-06-14T01:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
+  { id: 21, fase: 'Grupos', grupo: 'D', local: 'EE.UU.', visitante: 'Australia', fecha: '2026-06-19T16:00:00-03:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
+  { id: 22, fase: 'Grupos', grupo: 'D', local: 'Turquía', visitante: 'Paraguay', fecha: '2026-06-20T01:00:00-03:00', estadio: "Levi's Stadium", ciudad: 'San Francisco' },
+  { id: 23, fase: 'Grupos', grupo: 'D', local: 'Turquía', visitante: 'EE.UU.', fecha: '2026-06-25T23:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 24, fase: 'Grupos', grupo: 'D', local: 'Paraguay', visitante: 'Australia', fecha: '2026-06-25T23:00:00-03:00', estadio: "Levi's Stadium", ciudad: 'San Francisco' },
 
   // GRUPO E
-  { id: 25, fase: 'Grupos', grupo: 'E', local: 'Bélgica', flagLocal: '🇧🇪', visitante: 'Canadá', flagVisitante: '🇨🇦', fecha: '2026-06-13T17:00:00', estadio: 'BMO Field', ciudad: 'Toronto' },
-  { id: 26, fase: 'Grupos', grupo: 'E', local: 'Marruecos', flagLocal: '🇲🇦', visitante: 'Croacia', flagVisitante: '🇭🇷', fecha: '2026-06-13T20:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
-  { id: 27, fase: 'Grupos', grupo: 'E', local: 'Bélgica', flagLocal: '🇧🇪', visitante: 'Marruecos', flagVisitante: '🇲🇦', fecha: '2026-06-17T20:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 28, fase: 'Grupos', grupo: 'E', local: 'Croacia', flagLocal: '🇭🇷', visitante: 'Canadá', flagVisitante: '🇨🇦', fecha: '2026-06-17T17:00:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
-  { id: 29, fase: 'Grupos', grupo: 'E', local: 'Bélgica', flagLocal: '🇧🇪', visitante: 'Croacia', flagVisitante: '🇭🇷', fecha: '2026-06-21T20:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 30, fase: 'Grupos', grupo: 'E', local: 'Canadá', flagLocal: '🇨🇦', visitante: 'Marruecos', flagVisitante: '🇲🇦', fecha: '2026-06-21T20:00:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
+  { id: 25, fase: 'Grupos', grupo: 'E', local: 'Alemania', visitante: 'Curazao', fecha: '2026-06-14T14:00:00-03:00', estadio: 'NRG Stadium', ciudad: 'Houston' },
+  { id: 26, fase: 'Grupos', grupo: 'E', local: 'Costa de Marfil', visitante: 'Ecuador', fecha: '2026-06-14T20:00:00-03:00', estadio: 'Lincoln Financial Field', ciudad: 'Filadelfia' },
+  { id: 27, fase: 'Grupos', grupo: 'E', local: 'Alemania', visitante: 'Costa de Marfil', fecha: '2026-06-20T17:00:00-03:00', estadio: 'BMO Field', ciudad: 'Toronto' },
+  { id: 28, fase: 'Grupos', grupo: 'E', local: 'Ecuador', visitante: 'Curazao', fecha: '2026-06-20T21:00:00-03:00', estadio: 'Arrowhead Stadium', ciudad: 'Kansas City' },
+  { id: 29, fase: 'Grupos', grupo: 'E', local: 'Ecuador', visitante: 'Alemania', fecha: '2026-06-25T17:00:00-03:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
+  { id: 30, fase: 'Grupos', grupo: 'E', local: 'Curazao', visitante: 'Costa de Marfil', fecha: '2026-06-25T17:00:00-03:00', estadio: 'Lincoln Financial Field', ciudad: 'Filadelfia' },
 
   // GRUPO F
-  { id: 31, fase: 'Grupos', grupo: 'F', local: 'Uruguay', flagLocal: '🇺🇾', visitante: 'Corea del Sur', flagVisitante: '🇰🇷', fecha: '2026-06-14T17:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 32, fase: 'Grupos', grupo: 'F', local: 'Portugal', flagLocal: '🇵🇹', visitante: 'Ghana', flagVisitante: '🇬🇭', fecha: '2026-06-14T20:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 33, fase: 'Grupos', grupo: 'F', local: 'Portugal', flagLocal: '🇵🇹', visitante: 'Uruguay', flagVisitante: '🇺🇾', fecha: '2026-06-18T20:00:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
-  { id: 34, fase: 'Grupos', grupo: 'F', local: 'Ghana', flagLocal: '🇬🇭', visitante: 'Corea del Sur', flagVisitante: '🇰🇷', fecha: '2026-06-18T17:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
-  { id: 35, fase: 'Grupos', grupo: 'F', local: 'Portugal', flagLocal: '🇵🇹', visitante: 'Corea del Sur', flagVisitante: '🇰🇷', fecha: '2026-06-22T20:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 36, fase: 'Grupos', grupo: 'F', local: 'Ghana', flagLocal: '🇬🇭', visitante: 'Uruguay', flagVisitante: '🇺🇾', fecha: '2026-06-22T20:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 31, fase: 'Grupos', grupo: 'F', local: 'Países Bajos', visitante: 'Japón', fecha: '2026-06-14T17:00:00-03:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
+  { id: 32, fase: 'Grupos', grupo: 'F', local: 'Suecia', visitante: 'Túnez', fecha: '2026-06-14T23:00:00-03:00', estadio: 'Estadio BBVA', ciudad: 'Monterrey' },
+  { id: 33, fase: 'Grupos', grupo: 'F', local: 'Países Bajos', visitante: 'Suecia', fecha: '2026-06-20T14:00:00-03:00', estadio: 'NRG Stadium', ciudad: 'Houston' },
+  { id: 34, fase: 'Grupos', grupo: 'F', local: 'Túnez', visitante: 'Japón', fecha: '2026-06-21T01:00:00-03:00', estadio: 'Estadio BBVA', ciudad: 'Monterrey' },
+  { id: 35, fase: 'Grupos', grupo: 'F', local: 'Japón', visitante: 'Suecia', fecha: '2026-06-25T20:00:00-03:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
+  { id: 36, fase: 'Grupos', grupo: 'F', local: 'Túnez', visitante: 'Países Bajos', fecha: '2026-06-25T20:00:00-03:00', estadio: 'Arrowhead Stadium', ciudad: 'Kansas City' },
 
   // GRUPO G
-  { id: 37, fase: 'Grupos', grupo: 'G', local: 'EE.UU.', flagLocal: '🇺🇸', visitante: 'Gales', flagVisitante: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', fecha: '2026-06-14T17:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 38, fase: 'Grupos', grupo: 'G', local: 'Inglaterra', flagLocal: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', visitante: 'Irán', flagVisitante: '🇮🇷', fecha: '2026-06-14T20:00:00', estadio: 'Khalifa International', ciudad: 'Dallas' },
-  { id: 39, fase: 'Grupos', grupo: 'G', local: 'EE.UU.', flagLocal: '🇺🇸', visitante: 'Inglaterra', flagVisitante: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', fecha: '2026-06-18T20:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 40, fase: 'Grupos', grupo: 'G', local: 'Irán', flagLocal: '🇮🇷', visitante: 'Gales', flagVisitante: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', fecha: '2026-06-18T17:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 41, fase: 'Grupos', grupo: 'G', local: 'EE.UU.', flagLocal: '🇺🇸', visitante: 'Irán', flagVisitante: '🇮🇷', fecha: '2026-06-22T20:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 42, fase: 'Grupos', grupo: 'G', local: 'Gales', flagLocal: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', visitante: 'Inglaterra', flagVisitante: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', fecha: '2026-06-22T20:00:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 37, fase: 'Grupos', grupo: 'G', local: 'Bélgica', visitante: 'Egipto', fecha: '2026-06-15T19:00:00-03:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
+  { id: 38, fase: 'Grupos', grupo: 'G', local: 'Irán', visitante: 'Nueva Zelanda', fecha: '2026-06-16T01:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 39, fase: 'Grupos', grupo: 'G', local: 'Bélgica', visitante: 'Irán', fecha: '2026-06-21T16:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
+  { id: 40, fase: 'Grupos', grupo: 'G', local: 'Nueva Zelanda', visitante: 'Egipto', fecha: '2026-06-21T22:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
+  { id: 41, fase: 'Grupos', grupo: 'G', local: 'Egipto', visitante: 'Irán', fecha: '2026-06-27T00:00:00-03:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
+  { id: 42, fase: 'Grupos', grupo: 'G', local: 'Nueva Zelanda', visitante: 'Bélgica', fecha: '2026-06-27T00:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
 
   // GRUPO H
-  { id: 43, fase: 'Grupos', grupo: 'H', local: 'Países Bajos', flagLocal: '🇳🇱', visitante: 'Senegal', flagVisitante: '🇸🇳', fecha: '2026-06-15T17:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 44, fase: 'Grupos', grupo: 'H', local: 'Ecuador', flagLocal: '🇪🇨', visitante: 'Qatar', flagVisitante: '🇶🇦', fecha: '2026-06-15T20:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 45, fase: 'Grupos', grupo: 'H', local: 'Países Bajos', flagLocal: '🇳🇱', visitante: 'Ecuador', flagVisitante: '🇪🇨', fecha: '2026-06-19T17:00:00', estadio: 'Levi\'s Stadium', ciudad: 'San Francisco' },
-  { id: 46, fase: 'Grupos', grupo: 'H', local: 'Qatar', flagLocal: '🇶🇦', visitante: 'Senegal', flagVisitante: '🇸🇳', fecha: '2026-06-19T20:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 47, fase: 'Grupos', grupo: 'H', local: 'Países Bajos', flagLocal: '🇳🇱', visitante: 'Qatar', flagVisitante: '🇶🇦', fecha: '2026-06-23T20:00:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 48, fase: 'Grupos', grupo: 'H', local: 'Senegal', flagLocal: '🇸🇳', visitante: 'Ecuador', flagVisitante: '🇪🇨', fecha: '2026-06-23T20:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
+  { id: 43, fase: 'Grupos', grupo: 'H', local: 'España', visitante: 'Cabo Verde', fecha: '2026-06-15T14:00:00-03:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
+  { id: 44, fase: 'Grupos', grupo: 'H', local: 'Arabia Saudita', visitante: 'Uruguay', fecha: '2026-06-15T19:00:00-03:00', estadio: 'Hard Rock Stadium', ciudad: 'Miami' },
+  { id: 45, fase: 'Grupos', grupo: 'H', local: 'España', visitante: 'Arabia Saudita', fecha: '2026-06-21T13:00:00-03:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
+  { id: 46, fase: 'Grupos', grupo: 'H', local: 'Uruguay', visitante: 'Cabo Verde', fecha: '2026-06-21T19:00:00-03:00', estadio: 'Hard Rock Stadium', ciudad: 'Miami' },
+  { id: 47, fase: 'Grupos', grupo: 'H', local: 'Cabo Verde', visitante: 'Arabia Saudita', fecha: '2026-06-26T21:00:00-03:00', estadio: 'NRG Stadium', ciudad: 'Houston' },
+  { id: 48, fase: 'Grupos', grupo: 'H', local: 'Uruguay', visitante: 'España', fecha: '2026-06-26T21:00:00-03:00', estadio: 'Estadio Akron', ciudad: 'Guadalajara' },
 
-  // GRUPOS I-L (Mundial 2026 tiene 12 grupos, 48 equipos)
   // GRUPO I
-  { id: 49, fase: 'Grupos', grupo: 'I', local: 'Colombia', flagLocal: '🇨🇴', visitante: 'Rumania', flagVisitante: '🇷🇴', fecha: '2026-06-13T17:00:00', estadio: 'BMO Field', ciudad: 'Toronto' },
-  { id: 50, fase: 'Grupos', grupo: 'I', local: 'Turquía', flagLocal: '🇹🇷', visitante: 'Nueva Zelanda', flagVisitante: '🇳🇿', fecha: '2026-06-13T23:00:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
-  { id: 51, fase: 'Grupos', grupo: 'I', local: 'Colombia', flagLocal: '🇨🇴', visitante: 'Turquía', flagVisitante: '🇹🇷', fecha: '2026-06-17T17:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 52, fase: 'Grupos', grupo: 'I', local: 'Nueva Zelanda', flagLocal: '🇳🇿', visitante: 'Rumania', flagVisitante: '🇷🇴', fecha: '2026-06-17T20:00:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
-  { id: 53, fase: 'Grupos', grupo: 'I', local: 'Colombia', flagLocal: '🇨🇴', visitante: 'Nueva Zelanda', flagVisitante: '🇳🇿', fecha: '2026-06-21T20:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 54, fase: 'Grupos', grupo: 'I', local: 'Rumania', flagLocal: '🇷🇴', visitante: 'Turquía', flagVisitante: '🇹🇷', fecha: '2026-06-21T17:00:00', estadio: 'BMO Field', ciudad: 'Toronto' },
+  { id: 49, fase: 'Grupos', grupo: 'I', local: 'Francia', visitante: 'Senegal', fecha: '2026-06-16T16:00:00-03:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
+  { id: 50, fase: 'Grupos', grupo: 'I', local: 'Irak', visitante: 'Noruega', fecha: '2026-06-16T19:00:00-03:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 51, fase: 'Grupos', grupo: 'I', local: 'Francia', visitante: 'Irak', fecha: '2026-06-22T18:00:00-03:00', estadio: 'Lincoln Financial Field', ciudad: 'Filadelfia' },
+  { id: 52, fase: 'Grupos', grupo: 'I', local: 'Noruega', visitante: 'Senegal', fecha: '2026-06-22T21:00:00-03:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
+  { id: 53, fase: 'Grupos', grupo: 'I', local: 'Noruega', visitante: 'Francia', fecha: '2026-06-26T16:00:00-03:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 54, fase: 'Grupos', grupo: 'I', local: 'Senegal', visitante: 'Irak', fecha: '2026-06-26T16:00:00-03:00', estadio: 'BMO Field', ciudad: 'Toronto' },
 
   // GRUPO J
-  { id: 55, fase: 'Grupos', grupo: 'J', local: 'Chile', flagLocal: '🇨🇱', visitante: 'Noruega', flagVisitante: '🇳🇴', fecha: '2026-06-15T17:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
-  { id: 56, fase: 'Grupos', grupo: 'J', local: 'México', flagLocal: '🇲🇽', visitante: 'Perú', flagVisitante: '🇵🇪', fecha: '2026-06-15T20:00:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
-  { id: 57, fase: 'Grupos', grupo: 'J', local: 'Chile', flagLocal: '🇨🇱', visitante: 'México', flagVisitante: '🇲🇽', fecha: '2026-06-19T17:00:00', estadio: 'BMO Field', ciudad: 'Toronto' },
-  { id: 58, fase: 'Grupos', grupo: 'J', local: 'Perú', flagLocal: '🇵🇪', visitante: 'Noruega', flagVisitante: '🇳🇴', fecha: '2026-06-19T23:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 59, fase: 'Grupos', grupo: 'J', local: 'Chile', flagLocal: '🇨🇱', visitante: 'Perú', flagVisitante: '🇵🇪', fecha: '2026-06-23T20:00:00', estadio: 'Rose Bowl', ciudad: 'Los Angeles' },
-  { id: 60, fase: 'Grupos', grupo: 'J', local: 'Noruega', flagLocal: '🇳🇴', visitante: 'México', flagVisitante: '🇲🇽', fecha: '2026-06-23T17:00:00', estadio: 'Levi\'s Stadium', ciudad: 'San Francisco' },
+  { id: 55, fase: 'Grupos', grupo: 'J', local: 'Argentina', visitante: 'Argelia', fecha: '2026-06-16T22:00:00-03:00', estadio: 'Arrowhead Stadium', ciudad: 'Kansas City' },
+  { id: 56, fase: 'Grupos', grupo: 'J', local: 'Austria', visitante: 'Jordania', fecha: '2026-06-17T01:00:00-03:00', estadio: "Levi's Stadium", ciudad: 'San Francisco' },
+  { id: 57, fase: 'Grupos', grupo: 'J', local: 'Argentina', visitante: 'Austria', fecha: '2026-06-22T14:00:00-03:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
+  { id: 58, fase: 'Grupos', grupo: 'J', local: 'Jordania', visitante: 'Argelia', fecha: '2026-06-23T00:00:00-03:00', estadio: "Levi's Stadium", ciudad: 'San Francisco' },
+  { id: 59, fase: 'Grupos', grupo: 'J', local: 'Argelia', visitante: 'Austria', fecha: '2026-06-27T23:00:00-03:00', estadio: 'Arrowhead Stadium', ciudad: 'Kansas City' },
+  { id: 60, fase: 'Grupos', grupo: 'J', local: 'Jordania', visitante: 'Argentina', fecha: '2026-06-27T23:00:00-03:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
 
   // GRUPO K
-  { id: 61, fase: 'Grupos', grupo: 'K', local: 'Italia', flagLocal: '🇮🇹', visitante: 'Albania', flagVisitante: '🇦🇱', fecha: '2026-06-14T17:00:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
-  { id: 62, fase: 'Grupos', grupo: 'K', local: 'Eslovaquia', flagLocal: '🇸🇰', visitante: 'Venezuela', flagVisitante: '🇻🇪', fecha: '2026-06-14T23:00:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
-  { id: 63, fase: 'Grupos', grupo: 'K', local: 'Italia', flagLocal: '🇮🇹', visitante: 'Eslovaquia', flagVisitante: '🇸🇰', fecha: '2026-06-18T17:00:00', estadio: 'BMO Field', ciudad: 'Toronto' },
-  { id: 64, fase: 'Grupos', grupo: 'K', local: 'Venezuela', flagLocal: '🇻🇪', visitante: 'Albania', flagVisitante: '🇦🇱', fecha: '2026-06-18T23:00:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
-  { id: 65, fase: 'Grupos', grupo: 'K', local: 'Italia', flagLocal: '🇮🇹', visitante: 'Venezuela', flagVisitante: '🇻🇪', fecha: '2026-06-22T20:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
-  { id: 66, fase: 'Grupos', grupo: 'K', local: 'Albania', flagLocal: '🇦🇱', visitante: 'Eslovaquia', flagVisitante: '🇸🇰', fecha: '2026-06-22T17:00:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 61, fase: 'Grupos', grupo: 'K', local: 'Portugal', visitante: 'RD Congo', fecha: '2026-06-17T14:00:00-03:00', estadio: 'NRG Stadium', ciudad: 'Houston' },
+  { id: 62, fase: 'Grupos', grupo: 'K', local: 'Uzbekistán', visitante: 'Colombia', fecha: '2026-06-17T23:00:00-03:00', estadio: 'Estadio Azteca', ciudad: 'Ciudad de México' },
+  { id: 63, fase: 'Grupos', grupo: 'K', local: 'Portugal', visitante: 'Uzbekistán', fecha: '2026-06-23T14:00:00-03:00', estadio: 'NRG Stadium', ciudad: 'Houston' },
+  { id: 64, fase: 'Grupos', grupo: 'K', local: 'Colombia', visitante: 'RD Congo', fecha: '2026-06-23T23:00:00-03:00', estadio: 'Estadio Akron', ciudad: 'Guadalajara' },
+  { id: 65, fase: 'Grupos', grupo: 'K', local: 'Colombia', visitante: 'Portugal', fecha: '2026-06-27T20:30:00-03:00', estadio: 'Hard Rock Stadium', ciudad: 'Miami' },
+  { id: 66, fase: 'Grupos', grupo: 'K', local: 'RD Congo', visitante: 'Uzbekistán', fecha: '2026-06-27T20:30:00-03:00', estadio: 'Mercedes-Benz Stadium', ciudad: 'Atlanta' },
 
   // GRUPO L
-  { id: 67, fase: 'Grupos', grupo: 'L', local: 'Irlanda', flagLocal: '🇮🇪', visitante: 'Nigeria', flagVisitante: '🇳🇬', fecha: '2026-06-16T17:00:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
-  { id: 68, fase: 'Grupos', grupo: 'L', local: 'República Checa', flagLocal: '🇨🇿', visitante: 'Sudáfrica', flagVisitante: '🇿🇦', fecha: '2026-06-16T20:00:00', estadio: 'BMO Field', ciudad: 'Toronto' },
-  { id: 69, fase: 'Grupos', grupo: 'L', local: 'Irlanda', flagLocal: '🇮🇪', visitante: 'República Checa', flagVisitante: '🇨🇿', fecha: '2026-06-20T17:00:00', estadio: 'BC Place', ciudad: 'Vancouver' },
-  { id: 70, fase: 'Grupos', grupo: 'L', local: 'Sudáfrica', flagLocal: '🇿🇦', visitante: 'Nigeria', flagVisitante: '🇳🇬', fecha: '2026-06-20T23:00:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
-  { id: 71, fase: 'Grupos', grupo: 'L', local: 'Irlanda', flagLocal: '🇮🇪', visitante: 'Sudáfrica', flagVisitante: '🇿🇦', fecha: '2026-06-24T20:00:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
-  { id: 72, fase: 'Grupos', grupo: 'L', local: 'Nigeria', flagLocal: '🇳🇬', visitante: 'República Checa', flagVisitante: '🇨🇿', fecha: '2026-06-24T17:00:00', estadio: 'Levi\'s Stadium', ciudad: 'San Francisco' },
+  { id: 67, fase: 'Grupos', grupo: 'L', local: 'Inglaterra', visitante: 'Croacia', fecha: '2026-06-17T17:00:00-03:00', estadio: 'AT&T Stadium', ciudad: 'Dallas' },
+  { id: 68, fase: 'Grupos', grupo: 'L', local: 'Ghana', visitante: 'Panamá', fecha: '2026-06-17T20:00:00-03:00', estadio: 'BMO Field', ciudad: 'Toronto' },
+  { id: 69, fase: 'Grupos', grupo: 'L', local: 'Inglaterra', visitante: 'Ghana', fecha: '2026-06-23T17:00:00-03:00', estadio: 'Gillette Stadium', ciudad: 'Boston' },
+  { id: 70, fase: 'Grupos', grupo: 'L', local: 'Panamá', visitante: 'Croacia', fecha: '2026-06-23T20:00:00-03:00', estadio: 'BMO Field', ciudad: 'Toronto' },
+  { id: 71, fase: 'Grupos', grupo: 'L', local: 'Panamá', visitante: 'Inglaterra', fecha: '2026-06-27T18:00:00-03:00', estadio: 'MetLife Stadium', ciudad: 'Nueva York' },
+  { id: 72, fase: 'Grupos', grupo: 'L', local: 'Croacia', visitante: 'Ghana', fecha: '2026-06-27T18:00:00-03:00', estadio: 'Lincoln Financial Field', ciudad: 'Filadelfia' },
 ]
 
-// Fases eliminatorias (se completan dinámicamente)
-export const PARTIDOS_ELIMINATORIOS = [
-  { id: 73, fase: 'R16', local: '1A', flagLocal: '🔵', visitante: '2B', flagVisitante: '🔴', fecha: '2026-06-29T20:00:00' },
-  { id: 74, fase: 'R16', local: '1C', flagLocal: '🔵', visitante: '2D', flagVisitante: '🔴', fecha: '2026-06-29T23:00:00' },
-  { id: 75, fase: 'R16', local: '1E', flagLocal: '🔵', visitante: '2F', flagVisitante: '🔴', fecha: '2026-06-30T20:00:00' },
-  { id: 76, fase: 'R16', local: '1G', flagLocal: '🔵', visitante: '2H', flagVisitante: '🔴', fecha: '2026-06-30T23:00:00' },
-  { id: 77, fase: 'R16', local: '1B', flagLocal: '🔵', visitante: '2A', flagVisitante: '🔴', fecha: '2026-07-01T20:00:00' },
-  { id: 78, fase: 'R16', local: '1D', flagLocal: '🔵', visitante: '2C', flagVisitante: '🔴', fecha: '2026-07-01T23:00:00' },
-  { id: 79, fase: 'R16', local: '1F', flagLocal: '🔵', visitante: '2E', flagVisitante: '🔴', fecha: '2026-07-02T20:00:00' },
-  { id: 80, fase: 'R16', local: '1H', flagLocal: '🔵', visitante: '2G', flagVisitante: '🔴', fecha: '2026-07-02T23:00:00' },
-  { id: 81, fase: 'QF', local: 'W73', flagLocal: '⭐', visitante: 'W74', flagVisitante: '⭐', fecha: '2026-07-05T20:00:00' },
-  { id: 82, fase: 'QF', local: 'W75', flagLocal: '⭐', visitante: 'W76', flagVisitante: '⭐', fecha: '2026-07-05T23:00:00' },
-  { id: 83, fase: 'QF', local: 'W77', flagLocal: '⭐', visitante: 'W78', flagVisitante: '⭐', fecha: '2026-07-06T20:00:00' },
-  { id: 84, fase: 'QF', local: 'W79', flagLocal: '⭐', visitante: 'W80', flagVisitante: '⭐', fecha: '2026-07-06T23:00:00' },
-  { id: 85, fase: 'SF', local: 'W81', flagLocal: '⭐', visitante: 'W82', flagVisitante: '⭐', fecha: '2026-07-09T20:00:00' },
-  { id: 86, fase: 'SF', local: 'W83', flagLocal: '⭐', visitante: 'W84', flagVisitante: '⭐', fecha: '2026-07-10T20:00:00' },
-  { id: 87, fase: '3er', local: 'Perdedor SF1', flagLocal: '⭐', visitante: 'Perdedor SF2', flagVisitante: '⭐', fecha: '2026-07-13T16:00:00' },
-  { id: 88, fase: 'F', local: 'W85', flagLocal: '🏆', visitante: 'W86', flagVisitante: '🏆', fecha: '2026-07-13T20:00:00' },
-]
+// Fases eliminatorias: placeholders hasta que se definan los cruces.
+// (El Mundial 2026 arranca con dieciseisavos / Ronda de 32.)
+export const PARTIDOS_ELIMINATORIOS = []
 
-export const TODAS_FASES = ['Grupos', 'R16', 'QF', 'SF', 'F']
+export const TODAS_FASES = ['Grupos', 'R32', 'R16', 'QF', 'SF', 'F']

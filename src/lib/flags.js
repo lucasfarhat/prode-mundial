@@ -1,59 +1,73 @@
 // Mapea nombre de pais (tal como aparece en fixture.js) -> codigo ISO 3166-1 alpha-2.
 // Se usa para construir la URL de la bandera en flagcdn.com, que funciona en
 // todos los sistemas (Windows no renderiza los emojis de banderas de paises).
+// Cubre los 48 equipos clasificados al Mundial 2026.
 
 export const PAIS_ISO = {
+  // Grupo A
   'México': 'mx',
-  'Polonia': 'pl',
-  'Arabia Saudita': 'sa',
-  'Argentina': 'ar',
-  'Francia': 'fr',
-  'Australia': 'au',
-  'Dinamarca': 'dk',
-  'Túnez': 'tn',
-  'Brasil': 'br',
-  'Serbia': 'rs',
-  'Suiza': 'ch',
-  'Camerún': 'cm',
-  'España': 'es',
-  'Costa Rica': 'cr',
-  'Alemania': 'de',
-  'Japón': 'jp',
-  'Bélgica': 'be',
-  'Canadá': 'ca',
-  'Marruecos': 'ma',
-  'Croacia': 'hr',
-  'Uruguay': 'uy',
-  'Corea del Sur': 'kr',
-  'Portugal': 'pt',
-  'Ghana': 'gh',
-  'EE.UU.': 'us',
-  'Gales': 'gb-wls',
-  'Inglaterra': 'gb-eng',
-  'Irán': 'ir',
-  'Países Bajos': 'nl',
-  'Senegal': 'sn',
-  'Ecuador': 'ec',
-  'Qatar': 'qa',
-  'Colombia': 'co',
-  'Rumania': 'ro',
-  'Turquía': 'tr',
-  'Nueva Zelanda': 'nz',
-  'Chile': 'cl',
-  'Noruega': 'no',
-  'Perú': 'pe',
-  'Italia': 'it',
-  'Albania': 'al',
-  'Eslovaquia': 'sk',
-  'Venezuela': 've',
-  'Irlanda': 'ie',
-  'Nigeria': 'ng',
-  'República Checa': 'cz',
   'Sudáfrica': 'za',
+  'Corea del Sur': 'kr',
+  'República Checa': 'cz',
+  // Grupo B
+  'Canadá': 'ca',
+  'Bosnia y Herzegovina': 'ba',
+  'Qatar': 'qa',
+  'Suiza': 'ch',
+  // Grupo C
+  'Brasil': 'br',
+  'Marruecos': 'ma',
+  'Haití': 'ht',
+  'Escocia': 'gb-sct',
+  // Grupo D
+  'EE.UU.': 'us',
+  'Paraguay': 'py',
+  'Australia': 'au',
+  'Turquía': 'tr',
+  // Grupo E
+  'Alemania': 'de',
+  'Curazao': 'cw',
+  'Costa de Marfil': 'ci',
+  'Ecuador': 'ec',
+  // Grupo F
+  'Países Bajos': 'nl',
+  'Japón': 'jp',
+  'Suecia': 'se',
+  'Túnez': 'tn',
+  // Grupo G
+  'Bélgica': 'be',
+  'Egipto': 'eg',
+  'Irán': 'ir',
+  'Nueva Zelanda': 'nz',
+  // Grupo H
+  'España': 'es',
+  'Cabo Verde': 'cv',
+  'Arabia Saudita': 'sa',
+  'Uruguay': 'uy',
+  // Grupo I
+  'Francia': 'fr',
+  'Senegal': 'sn',
+  'Irak': 'iq',
+  'Noruega': 'no',
+  // Grupo J
+  'Argentina': 'ar',
+  'Argelia': 'dz',
+  'Austria': 'at',
+  'Jordania': 'jo',
+  // Grupo K
+  'Portugal': 'pt',
+  'RD Congo': 'cd',
+  'Uzbekistán': 'uz',
+  'Colombia': 'co',
+  // Grupo L
+  'Inglaterra': 'gb-eng',
+  'Croacia': 'hr',
+  'Ghana': 'gh',
+  'Panamá': 'pa',
 }
 
 // Devuelve la URL de la bandera (PNG de 40px de ancho) o null si no es un pais
-// conocido (ej. placeholders de eliminatorias como '1A', 'W73').
+// conocido (ej. placeholders de eliminatorias).
 export function flagUrl(nombrePais) {
   const code = PAIS_ISO[nombrePais]
   return code ? `https://flagcdn.com/w40/${code}.png` : null
