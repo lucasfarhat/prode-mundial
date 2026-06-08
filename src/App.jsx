@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase, getSession } from './lib/supabase'
+import faguLogo from './assets/fagu-logo.png'
 import Fixture from './pages/Fixture'
 import Tabla from './pages/Tabla'
 import Semanal from './pages/Semanal'
@@ -72,18 +73,16 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
-        <div className="header-inner">
-          <div className="brand">
-            <span className="brand-icon">🏆</span>
-            <div>
-              <div className="brand-title">Prode Mundial 2026</div>
-              <div className="brand-sub">México · EE.UU. · Canadá</div>
-            </div>
+        <div className="header-bar">
+          <img className="brand-logo" src={faguLogo} alt="fagú Comida Árabe" />
+          <div className="brand-divider" />
+          <div className="brand-text">
+            <div className="brand-kicker">fagú · Comida Árabe</div>
+            <div className="brand-title">Prode Mundial <span>2026</span></div>
+            <div className="brand-sub">⚽ México · EE.UU. · Canadá</div>
           </div>
           {session && perfil && (
-            <div className="user-info">
-              <span className="user-name">Hola, {perfil.nombre.split(' ')[0]}</span>
-            </div>
+            <div className="user-chip">Hola, {perfil.nombre.split(' ')[0]}</div>
           )}
         </div>
         <nav className="nav">
@@ -107,6 +106,12 @@ export default function App() {
         {section === 'registro' && <Registro onSuccess={() => setSection('fixture')} />}
         {section === 'admin' && perfil?.es_admin && <Admin />}
       </main>
+
+      <footer className="site-footer">
+        <img className="footer-logo" src={faguLogo} alt="fagú" />
+        <div className="footer-text">Organiza <b>fagú</b> · Comida Árabe</div>
+        <div className="footer-mini">Prode Mundial 2026</div>
+      </footer>
     </div>
   )
 }
