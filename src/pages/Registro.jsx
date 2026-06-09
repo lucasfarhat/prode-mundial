@@ -35,8 +35,8 @@ export default function Registro({ onSuccess }) {
     try {
       if (mode === 'register') {
         await signUp({ email: form.email, password: form.password, nombre: form.nombre, telefono: form.telefono })
-        setSuccess('¡Cuenta creada! Revisá tu email para confirmar.')
-        setTimeout(() => onSuccess?.(), 2000)
+        setSuccess('¡Cuenta creada! Ya podés cargar tus pronósticos. 🎉')
+        setTimeout(() => onSuccess?.(), 1500)
       } else {
         await signIn({ email: form.email, password: form.password })
         onSuccess?.()
