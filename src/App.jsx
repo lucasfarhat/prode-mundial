@@ -22,11 +22,15 @@ export default function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getSession().then(async (s) => {
-      setSession(s)
-      if (s?.user) await fetchPerfil(s.user.id)
-      setLoading(false)
-    })
+    getSession()
+      .then(async (s) => {
+        setSession(s)
+        if (s?.user) await fetchPerfil(s.user.id)
+      })
+      .catch((err) => {
+        console.error('getSession error:', err)
+      })
+      .finally(() => setLoading(false))
 
     const { data: listener } = supabase.auth.onAuthStateChange(async (_event, s) => {
       setSession(s)
