@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { signUp, signIn } from '../lib/supabase'
 
 export default function Registro({ onSuccess }) {
-  const [mode, setMode] = useState('register') // 'register' | 'login'
+  const [mode, setMode] = useState('login') // 'login' | 'register'
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -87,13 +87,28 @@ export default function Registro({ onSuccess }) {
           {loading ? 'Procesando...' : mode === 'register' ? '👤 Registrarme' : '🔑 Ingresar'}
         </button>
 
-        <div style={{ textAlign: 'center', marginTop: 14, fontSize: 13, color: '#888' }}>
-          {mode === 'register' ? (
-            <>¿Ya tenés cuenta? <span className="link-btn" onClick={() => setMode('login')}>Iniciar sesión</span></>
-          ) : (
-            <>¿No tenés cuenta? <span className="link-btn" onClick={() => setMode('register')}>Registrarme</span></>
-          )}
-        </div>
+        {mode === 'login' ? (
+          <div
+            onClick={() => setMode('register')}
+            style={{
+              marginTop: 16,
+              padding: '12px 16px',
+              background: '#d32f2f',
+              color: '#fff',
+              borderRadius: 10,
+              textAlign: 'center',
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            ¿No tenés cuenta? ¡Registrate acá!
+          </div>
+        ) : (
+          <div style={{ textAlign: 'center', marginTop: 14, fontSize: 13, color: '#888' }}>
+            ¿Ya tenés cuenta? <span className="link-btn" onClick={() => setMode('login')}>Iniciar sesión</span>
+          </div>
+        )}
       </div>
     </div>
   )
