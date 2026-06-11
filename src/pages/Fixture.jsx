@@ -83,42 +83,57 @@ export default function Fixture({ session }) {
 
   const partidosDeFase = todosLosPartidos.filter((p) => p.fase === fase)
 
-  // Extraer fechas calendario únicas (sin hora) y ordenadas
-  const fechasCalendario = [...new Set(
-    partidosDeFase.map(p => new Date(p.fecha).toDateString())
-  )].sort((a, b) => new Date(a) - new Date(b))
+  // Calcular jornadas de grupos: cada grupo tiene 6 partidos en 3 jornadas (2 por jornada)
+  const calcularJornada = (partido) => {
+    if (fase !== 'Grupos') return null
+    const partidosDelGrupo = partidosDeFase
+      .filter(p => p.grupo === partido.grupo)
+      .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+    const idx = partidosDelGrupo.findIndex(p => p.id === partido.id)
+    return Math.floor(idx / 2) + 1 // jornada 1, 2 o 3
+  }
 
-  // Auto-detectar la primera fecha cuando cambia de fase
+  // Mapear partidos con su jornada
+  const partidosConJornada = fase === 'Grupos'
+    ? partidosDeFase.map(p => ({ ...p, jornada: calcularJornada(p) }))
+    : partidosDeFase
+
+  // Extraer jornadas únicas para Grupos
+  const jornadas = fase === 'Grupos'
+    ? [...new Set(partidosConJornada.map(p => p.jornada))].sort((a, b) => a - b)
+    : [1]
+
+  // Auto-detectar la primera jornada cuando cambia de fase
   useEffect(() => {
-    if (fechasCalendario.length && !fechaActual) {
-      setFechaActual(fechasCalendario[0])
+    if (jornadas.length && !fechaActual) {
+      setFechaActual(jornadas[0])
     }
   }, [fase])
 
-  // Auto-avanzar a la siguiente fecha cuando la actual termina
+  // Auto-avanzar a la siguiente jornada cuando la actual termina
   useEffect(() => {
-    if (!fechaActual || fechasCalendario.length === 0) return
-    const partidosDeHoy = partidosDeFase.filter(p => new Date(p.fecha).toDateString() === fechaActual)
-    const todosTerminaron = partidosDeHoy.every(p => {
+    if (!fechaActual || jornadas.length === 0) return
+    const partidosDeJornada = partidosConJornada.filter(p => p.jornada === fechaActual)
+    const todosTerminaron = partidosDeJornada.every(p => {
       const real = dbPartidos.find(r => r.id === p.id)
       return real?.jugado
     })
-    if (todosTerminaron && fechasCalendario.indexOf(fechaActual) < fechasCalendario.length - 1) {
-      const proximaFechaIdx = fechasCalendario.indexOf(fechaActual) + 1
-      setFechaActual(fechasCalendario[proximaFechaIdx])
+    if (todosTerminaron && jornadas.indexOf(fechaActual) < jornadas.length - 1) {
+      const proximaJornadaIdx = jornadas.indexOf(fechaActual) + 1
+      setFechaActual(jornadas[proximaJornadaIdx])
     }
-  }, [dbPartidos, fechaActual, fechasCalendario, partidosDeFase])
+  }, [dbPartidos, fechaActual, jornadas, partidosConJornada])
 
-  // Agrupar partidos de la fecha actual por grupo
-  const partidosDelDia = partidosDeFase.filter(p => new Date(p.fecha).toDateString() === fechaActual)
-  const gruposDelDia = {}
+  // Filtrar partidos de la jornada actual y agrupar por grupo
+  const partidosDeJornada = partidosConJornada.filter(p => p.jornada === fechaActual)
+  const gruposDeJornada = {}
   if (fase === 'Grupos') {
-    partidosDelDia.forEach((p) => {
-      if (!gruposDelDia[p.grupo]) gruposDelDia[p.grupo] = []
-      gruposDelDia[p.grupo].push(p)
+    partidosDeJornada.forEach((p) => {
+      if (!gruposDeJornada[p.grupo]) gruposDeJornada[p.grupo] = []
+      gruposDeJornada[p.grupo].push(p)
     })
   }
-  const partidos = fase === 'Grupos' ? partidosDelDia : partidosDelDia
+  const partidos = fase === 'Grupos' ? partidosDeJornada : partidosDeFase
 
   function getResultadoReal(id) {
     return dbPartidos.find((p) => p.id === id)
@@ -203,20 +218,20 @@ export default function Fixture({ session }) {
         ))}
       </div>
 
-      {fase === 'Grupos' && fechasCalendario.length > 0 && (
+      {fase === 'Grupos' && jornadas.length > 0 && (
         <div style={{ display: 'flex', gap: 6, marginBottom: '1rem', overflowX: 'auto', paddingBottom: 4 }}>
-          {fechasCalendario.map((f, idx) => {
-            const label = 'Fecha ' + (idx + 1)
+          {jornadas.map((j) => {
+            const label = 'Fecha ' + j
             return (
               <button
-                key={f}
-                onClick={() => setFechaActual(f)}
+                key={j}
+                onClick={() => setFechaActual(j)}
                 style={{
                   padding: '7px 14px',
-                  border: f === fechaActual ? 'none' : '1px solid #ddd',
+                  border: j === fechaActual ? 'none' : '1px solid #ddd',
                   borderRadius: '999px',
-                  background: f === fechaActual ? '#d99a1c' : '#fff',
-                  color: f === fechaActual ? '#3a2a05' : '#666',
+                  background: j === fechaActual ? '#d99a1c' : '#fff',
+                  color: j === fechaActual ? '#3a2a05' : '#666',
                   cursor: 'pointer',
                   fontSize: 12,
                   fontWeight: 600,
@@ -236,8 +251,8 @@ export default function Fixture({ session }) {
           <>
             {fase === 'Grupos' && fechaActual && (
               <>
-                <div className="group-title">Fecha {fechasCalendario.indexOf(fechaActual) + 1}</div>
-                {Object.entries(gruposDelDia).map(([grupo, ps]) => (
+                <div className="group-title">Fecha {fechaActual}</div>
+                {Object.entries(gruposDeJornada).map(([grupo, ps]) => (
                   <div key={grupo}>
                     <div className="group-title" style={{ marginTop: '0.8rem' }}>Grupo {grupo}</div>
                     {ps.map(renderMatch)}
