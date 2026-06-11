@@ -22,22 +22,34 @@ export default function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Timeout de seguridad: nunca dejar la app colgada en "Cargando..."
+    const failsafe = setTimeout(() => setLoading(false), 3000)
+
     getSession()
-      .then(async (s) => {
+      .then((s) => {
         setSession(s)
-        if (s?.user) await fetchPerfil(s.user.id)
+        if (s?.user) setTimeout(() => fetchPerfil(s.user.id), 0)
       })
       .catch((err) => {
         console.error('getSession error:', err)
       })
-      .finally(() => setLoading(false))
+      .finally(() => {
+        clearTimeout(failsafe)
+        setLoading(false)
+      })
 
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, s) => {
+    // El callback NO debe ser async ni llamar a supabase directamente:
+    // deja tomado el lock interno de auth y getSession() queda esperando
+    // para siempre (pantalla "Cargando..." hasta refrescar).
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s)
-      if (s?.user) await fetchPerfil(s.user.id)
+      if (s?.user) setTimeout(() => fetchPerfil(s.user.id), 0)
       else setPerfil(null)
     })
-    return () => listener.subscription.unsubscribe()
+    return () => {
+      clearTimeout(failsafe)
+      listener.subscription.unsubscribe()
+    }
   }, [])
 
   async function fetchPerfil(userId) {

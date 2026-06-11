@@ -41,6 +41,7 @@ declare
   v_m jsonb;
   v_updated int := 0;
   v_pending int;
+  v_intento int;
 begin
   -- Solo llama a la API si hay partidos que ya deberian haber terminado
   -- y siguen sin resultado (ahorra llamadas fuera de los dias de partido).
@@ -52,12 +53,25 @@ begin
   select value into v_key from private.secrets where name = 'footballdata_key';
   if v_key is null then return 0; end if;
 
-  select * into v_resp from extensions.http((
-    'GET',
-    'https://api.football-data.org/v4/competitions/2000/matches?status=FINISHED',
-    array[extensions.http_header('X-Auth-Token', v_key)],
-    null, null
-  )::extensions.http_request);
+  -- Timeouts mas generosos (el default de conexion es 1s y falla seguido)
+  perform extensions.http_set_curlopt('CURLOPT_CONNECTTIMEOUT_MS', '10000');
+  perform extensions.http_set_curlopt('CURLOPT_TIMEOUT_MS', '20000');
+
+  -- Hasta 3 intentos por si la API tarda en responder
+  for v_intento in 1..3 loop
+    begin
+      select * into v_resp from extensions.http((
+        'GET',
+        'https://api.football-data.org/v4/competitions/2000/matches?status=FINISHED',
+        array[extensions.http_header('X-Auth-Token', v_key)],
+        null, null
+      )::extensions.http_request);
+      exit;
+    exception when others then
+      if v_intento = 3 then raise; end if;
+      perform pg_sleep(2);
+    end;
+  end loop;
 
   if v_resp.status <> 200 then
     raise notice 'football-data status %', v_resp.status;

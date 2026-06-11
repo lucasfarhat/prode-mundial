@@ -5,3 +5,11 @@ dist
 .vercel
 *.log
 .DS_Store
+apply_rls.mjs
+check_tables.mjs
+fix_rls.js
+fix_rls.mjs
+inspect_table.mjs
+diag.mjs
+diag0.mjs
+fix_sync.mjs
