@@ -44,17 +44,9 @@ export default function Fixture({ session }) {
     }
     // Intentar cargar partidos de Supabase (si ya están cargados por admin)
     supabase.from('partidos').select('*').then(({ data }) => {
-      if (data?.length) {
-        setDbPartidos(data)
-        // Auto-detectar la primera fecha de la fase actual
-        const partidosDeFase = data.filter(p => p.fase === fase)
-        if (partidosDeFase.length && !fechaActual) {
-          const fechas = [...new Set(partidosDeFase.map(p => p.fecha))].sort()
-          setFechaActual(fechas[0])
-        }
-      }
+      if (data?.length) setDbPartidos(data)
     })
-  }, [session, fase, fechaActual])
+  }, [session])
 
   function handleScore(partidoId, side, val) {
     const num = val === '' ? '' : Math.max(0, Math.min(20, parseInt(val) || 0))
@@ -91,25 +83,42 @@ export default function Fixture({ session }) {
 
   const partidosDeFase = todosLosPartidos.filter((p) => p.fase === fase)
 
-  // Extraer fechas únicas y ordenadas
-  const fechas = [...new Set(partidosDeFase.map(p => p.fecha))].sort()
+  // Extraer fechas calendario únicas (sin hora) y ordenadas
+  const fechasCalendario = [...new Set(
+    partidosDeFase.map(p => new Date(p.fecha).toDateString())
+  )].sort((a, b) => new Date(a) - new Date(b))
+
+  // Auto-detectar la primera fecha cuando cambia de fase
+  useEffect(() => {
+    if (fechasCalendario.length && !fechaActual) {
+      setFechaActual(fechasCalendario[0])
+    }
+  }, [fase])
 
   // Auto-avanzar a la siguiente fecha cuando la actual termina
   useEffect(() => {
-    if (!fechaActual || fechas.length === 0) return
-    const partidosDeHoy = partidosDeFase.filter(p => p.fecha === fechaActual)
+    if (!fechaActual || fechasCalendario.length === 0) return
+    const partidosDeHoy = partidosDeFase.filter(p => new Date(p.fecha).toDateString() === fechaActual)
     const todosTerminaron = partidosDeHoy.every(p => {
       const real = dbPartidos.find(r => r.id === p.id)
       return real?.jugado
     })
-    if (todosTerminaron && fechas.indexOf(fechaActual) < fechas.length - 1) {
-      const proximaFechaIdx = fechas.indexOf(fechaActual) + 1
-      setFechaActual(fechas[proximaFechaIdx])
+    if (todosTerminaron && fechasCalendario.indexOf(fechaActual) < fechasCalendario.length - 1) {
+      const proximaFechaIdx = fechasCalendario.indexOf(fechaActual) + 1
+      setFechaActual(fechasCalendario[proximaFechaIdx])
     }
-  }, [dbPartidos, fechaActual, fechas, partidosDeFase])
+  }, [dbPartidos, fechaActual, fechasCalendario, partidosDeFase])
 
-  // Mostrar partidos de la fecha actual
-  const partidos = partidosDeFase.filter(p => p.fecha === fechaActual)
+  // Agrupar partidos de la fecha actual por grupo
+  const partidosDelDia = partidosDeFase.filter(p => new Date(p.fecha).toDateString() === fechaActual)
+  const gruposDelDia = {}
+  if (fase === 'Grupos') {
+    partidosDelDia.forEach((p) => {
+      if (!gruposDelDia[p.grupo]) gruposDelDia[p.grupo] = []
+      gruposDelDia[p.grupo].push(p)
+    })
+  }
+  const partidos = fase === 'Grupos' ? partidosDelDia : partidosDelDia
 
   function getResultadoReal(id) {
     return dbPartidos.find((p) => p.id === id)
@@ -179,7 +188,7 @@ export default function Fixture({ session }) {
         </div>
       )}
       <div className="alert alert-info">
-        🔒 Los pronósticos se cierran 1 hora antes de cada partido.
+        🔒 Los pronósticos se cierran 5 minutos antes de cada partido.
       </div>
 
       <div className="phase-tabs">
@@ -194,10 +203,9 @@ export default function Fixture({ session }) {
         ))}
       </div>
 
-      {fase === 'Grupos' && fechas.length > 0 && (
+      {fase === 'Grupos' && fechasCalendario.length > 0 && (
         <div style={{ display: 'flex', gap: 6, marginBottom: '1rem', overflowX: 'auto', paddingBottom: 4 }}>
-          {fechas.map((f, idx) => {
-            const fecha = new Date(f)
+          {fechasCalendario.map((f, idx) => {
             const label = 'Fecha ' + (idx + 1)
             return (
               <button
@@ -227,9 +235,17 @@ export default function Fixture({ session }) {
         {partidos.length > 0 ? (
           <>
             {fase === 'Grupos' && fechaActual && (
-              <div className="group-title">Fecha {fechas.indexOf(fechaActual) + 1}</div>
+              <>
+                <div className="group-title">Fecha {fechasCalendario.indexOf(fechaActual) + 1}</div>
+                {Object.entries(gruposDelDia).map(([grupo, ps]) => (
+                  <div key={grupo}>
+                    <div className="group-title" style={{ marginTop: '0.8rem' }}>Grupo {grupo}</div>
+                    {ps.map(renderMatch)}
+                  </div>
+                ))}
+              </>
             )}
-            {partidos.map(renderMatch)}
+            {fase !== 'Grupos' && partidos.map(renderMatch)}
           </>
         ) : (
           <div style={{ color: '#aaa', fontSize: 13, padding: '1rem 0' }}>
