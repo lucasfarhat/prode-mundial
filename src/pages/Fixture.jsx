@@ -14,7 +14,7 @@ const FASES = [
 function isLocked(fechaStr) {
   const fecha = new Date(fechaStr)
   const ahora = new Date()
-  return ahora >= new Date(fecha.getTime() - 5 * 60 * 1000)
+  return ahora >= new Date(fecha.getTime() - 1 * 60 * 1000)
 }
 
 function formatFecha(fechaStr) {
@@ -203,7 +203,7 @@ export default function Fixture({ session }) {
         </div>
       )}
       <div className="alert alert-info">
-        🔒 Los pronósticos se cierran 5 minutos antes de cada partido.
+        🔒 Los pronósticos se cierran 1 minuto antes de cada partido.
       </div>
 
       <div className="phase-tabs">
