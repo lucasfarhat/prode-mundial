@@ -14,7 +14,7 @@ const FASES = [
 function isLocked(fechaStr) {
   const fecha = new Date(fechaStr)
   const ahora = new Date()
-  return ahora >= new Date(fecha.getTime() - 60 * 60 * 1000)
+  return ahora >= new Date(fecha.getTime() - 5 * 60 * 1000)
 }
 
 function formatFecha(fechaStr) {
@@ -24,6 +24,7 @@ function formatFecha(fechaStr) {
 
 export default function Fixture({ session }) {
   const [fase, setFase] = useState('Grupos')
+  const [fechaActual, setFechaActual] = useState(null)
   const [pronosticos, setPronosticos] = useState({})
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -43,9 +44,17 @@ export default function Fixture({ session }) {
     }
     // Intentar cargar partidos de Supabase (si ya están cargados por admin)
     supabase.from('partidos').select('*').then(({ data }) => {
-      if (data?.length) setDbPartidos(data)
+      if (data?.length) {
+        setDbPartidos(data)
+        // Auto-detectar la primera fecha de la fase actual
+        const partidosDeFase = data.filter(p => p.fase === fase)
+        if (partidosDeFase.length && !fechaActual) {
+          const fechas = [...new Set(partidosDeFase.map(p => p.fecha))].sort()
+          setFechaActual(fechas[0])
+        }
+      }
     })
-  }, [session])
+  }, [session, fase, fechaActual])
 
   function handleScore(partidoId, side, val) {
     const num = val === '' ? '' : Math.max(0, Math.min(20, parseInt(val) || 0))
@@ -80,16 +89,27 @@ export default function Fixture({ session }) {
     setSaving(false)
   }
 
-  const partidos = todosLosPartidos.filter((p) => p.fase === fase)
+  const partidosDeFase = todosLosPartidos.filter((p) => p.fase === fase)
 
-  // Agrupar por grupo en fase de grupos
-  const grupos = {}
-  if (fase === 'Grupos') {
-    partidos.forEach((p) => {
-      if (!grupos[p.grupo]) grupos[p.grupo] = []
-      grupos[p.grupo].push(p)
+  // Extraer fechas únicas y ordenadas
+  const fechas = [...new Set(partidosDeFase.map(p => p.fecha))].sort()
+
+  // Auto-avanzar a la siguiente fecha cuando la actual termina
+  useEffect(() => {
+    if (!fechaActual || fechas.length === 0) return
+    const partidosDeHoy = partidosDeFase.filter(p => p.fecha === fechaActual)
+    const todosTerminaron = partidosDeHoy.every(p => {
+      const real = dbPartidos.find(r => r.id === p.id)
+      return real?.jugado
     })
-  }
+    if (todosTerminaron && fechas.indexOf(fechaActual) < fechas.length - 1) {
+      const proximaFechaIdx = fechas.indexOf(fechaActual) + 1
+      setFechaActual(fechas[proximaFechaIdx])
+    }
+  }, [dbPartidos, fechaActual, fechas, partidosDeFase])
+
+  // Mostrar partidos de la fecha actual
+  const partidos = partidosDeFase.filter(p => p.fecha === fechaActual)
 
   function getResultadoReal(id) {
     return dbPartidos.find((p) => p.id === id)
@@ -167,29 +187,54 @@ export default function Fixture({ session }) {
           <button
             key={f.id}
             className={`tab-btn ${fase === f.id ? 'active' : ''}`}
-            onClick={() => setFase(f.id)}
+            onClick={() => { setFase(f.id); setFechaActual(null) }}
           >
             {f.label}
           </button>
         ))}
       </div>
 
-      <div className="card">
-        {fase === 'Grupos' ? (
-          Object.entries(grupos).map(([grupo, ps]) => (
-            <div key={grupo}>
-              <div className="group-title">Grupo {grupo}</div>
-              {ps.map(renderMatch)}
-            </div>
-          ))
-        ) : (
-          partidos.length > 0
-            ? partidos.map(renderMatch)
-            : (
-              <div style={{ color: '#aaa', fontSize: 13, padding: '1rem 0' }}>
-                Esta fase se activa a medida que avanza el torneo.
-              </div>
+      {fase === 'Grupos' && fechas.length > 0 && (
+        <div style={{ display: 'flex', gap: 6, marginBottom: '1rem', overflowX: 'auto', paddingBottom: 4 }}>
+          {fechas.map((f, idx) => {
+            const fecha = new Date(f)
+            const label = 'Fecha ' + (idx + 1)
+            return (
+              <button
+                key={f}
+                onClick={() => setFechaActual(f)}
+                style={{
+                  padding: '7px 14px',
+                  border: f === fechaActual ? 'none' : '1px solid #ddd',
+                  borderRadius: '999px',
+                  background: f === fechaActual ? '#d99a1c' : '#fff',
+                  color: f === fechaActual ? '#3a2a05' : '#666',
+                  cursor: 'pointer',
+                  fontSize: 12,
+                  fontWeight: 600,
+                  whiteSpace: 'nowrap',
+                  transition: 'all .15s'
+                }}
+              >
+                {label}
+              </button>
             )
+          })}
+        </div>
+      )}
+
+      <div className="card">
+        {partidos.length > 0 ? (
+          <>
+            {fase === 'Grupos' && fechaActual && (
+              <div className="group-title">Fecha {fechas.indexOf(fechaActual) + 1}</div>
+            )}
+            {partidos.map(renderMatch)}
+          </>
+        ) : (
+          <div style={{ color: '#aaa', fontSize: 13, padding: '1rem 0' }}>
+            Esta fase se activa a medida que avanza el torneo.
+          </div>
         )}
       </div>
 
