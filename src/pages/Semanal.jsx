@@ -22,6 +22,14 @@ export default function Semanal() {
 
   const fmtFecha = (d) => d.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' })
 
+  // Formatea un date 'YYYY-MM-DD' sin correrlo por zona horaria
+  const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+  const fmtDateStr = (s) => {
+    if (!s) return ''
+    const [, mm, dd] = s.split('-')
+    return `${parseInt(dd, 10)} ${MESES[parseInt(mm, 10) - 1]}`
+  }
+
   return (
     <div>
       <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: '1rem' }}>Ganador semanal</h2>
@@ -39,11 +47,11 @@ export default function Semanal() {
           Todavía no hay ganadores semanales. El primer ganador se anunciará el domingo {fmtFecha(domingo)}.
         </div>
       ) : (
-        ganadores.map((g, i) => (
+        ganadores.map((g) => (
           <div className="winner-card" key={g.id}>
             <div>
-              <div className="winner-week">Semana {g.semana} · {g.fecha_inicio} al {g.fecha_fin}</div>
-              <div className="winner-name">{i === 0 ? '🥇 ' : ''}{g.nombre_ganador}</div>
+              <div className="winner-week">Semana {g.semana} · {fmtDateStr(g.fecha_inicio)} al {fmtDateStr(g.fecha_fin)}</div>
+              <div className="winner-name">🏆 Ganador: {g.nombre_ganador}</div>
             </div>
             <div>
               <div className="winner-pts">{g.puntos_semana}</div>
