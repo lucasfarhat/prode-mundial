@@ -19,7 +19,13 @@ function isLocked(fechaStr) {
 
 function formatFecha(fechaStr) {
   const d = new Date(fechaStr)
-  return d.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' })
+  const fecha = d.toLocaleDateString('es-AR', {
+    day: 'numeric', month: 'short', timeZone: 'America/Argentina/Buenos_Aires',
+  })
+  const hora = d.toLocaleTimeString('es-AR', {
+    hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Argentina/Buenos_Aires',
+  })
+  return `${fecha} · ${hora} hs`
 }
 
 export default function Fixture({ session }) {
