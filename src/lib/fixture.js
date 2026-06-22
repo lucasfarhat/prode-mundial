@@ -58,7 +58,7 @@ export const PARTIDOS_GRUPOS = [
   { id: 37, fase: 'Grupos', grupo: 'G', local: 'Bélgica', visitante: 'Egipto', fecha: '2026-06-15T16:00:00-03:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
   { id: 38, fase: 'Grupos', grupo: 'G', local: 'Irán', visitante: 'Nueva Zelanda', fecha: '2026-06-15T22:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
   { id: 39, fase: 'Grupos', grupo: 'G', local: 'Bélgica', visitante: 'Irán', fecha: '2026-06-21T16:00:00-03:00', estadio: 'SoFi Stadium', ciudad: 'Los Angeles' },
-  { id: 40, fase: 'Grupos', grupo: 'G', local: 'Nueva Zelanda', visitante: 'Egipto', fecha: '2026-06-21T22:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
+  { id: 40, fase: 'Grupos', grupo: 'G', local: 'Nueva Zelanda', visitante: 'Egipto', fecha: '2026-06-22T00:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
   { id: 41, fase: 'Grupos', grupo: 'G', local: 'Egipto', visitante: 'Irán', fecha: '2026-06-27T00:00:00-03:00', estadio: 'Lumen Field', ciudad: 'Seattle' },
   { id: 42, fase: 'Grupos', grupo: 'G', local: 'Nueva Zelanda', visitante: 'Bélgica', fecha: '2026-06-27T00:00:00-03:00', estadio: 'BC Place', ciudad: 'Vancouver' },
 
