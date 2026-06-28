@@ -77,28 +77,34 @@ export async function getPartidos() {
 
 // --- TABLA DE POSICIONES ---
 
+// Desempate manual: cuando dos quedan iguales en puntos, exactos y diferencia,
+// este orden define quién va primero (mayor número = más arriba).
+const PRIORIDAD_DESEMPATE = {
+  // Maria Guillermina Beltran va antes que Aoun Made en caso de empate total
+  '547e4e20-c6b9-438f-a55b-a8ee98493d61': 1,
+}
+
+function ordenarTabla(data) {
+  return (data || []).slice().sort((a, b) =>
+    b.puntos - a.puntos ||
+    b.exactos - a.exactos ||
+    a.diferencia_total - b.diferencia_total ||
+    (PRIORIDAD_DESEMPATE[b.user_id] || 0) - (PRIORIDAD_DESEMPATE[a.user_id] || 0)
+  )
+}
+
 export async function getTablaPosiciones() {
   // Vista de Supabase que calcula puntos por usuario (acumulado de todo el torneo)
-  const { data, error } = await supabase
-    .from('tabla_posiciones')
-    .select('*')
-    .order('puntos', { ascending: false })
-    .order('exactos', { ascending: false })
-    .order('diferencia_total', { ascending: true })
+  const { data, error } = await supabase.from('tabla_posiciones').select('*')
   if (error) throw error
-  return data
+  return ordenarTabla(data)
 }
 
 export async function getTablaSemanaActual() {
   // Vista que calcula puntos solo de los partidos de la semana en curso (lun-dom ART)
-  const { data, error } = await supabase
-    .from('tabla_semana_actual')
-    .select('*')
-    .order('puntos', { ascending: false })
-    .order('exactos', { ascending: false })
-    .order('diferencia_total', { ascending: true })
+  const { data, error } = await supabase.from('tabla_semana_actual').select('*')
   if (error) throw error
-  return data
+  return ordenarTabla(data)
 }
 
 // --- GANADOR SEMANAL ---
