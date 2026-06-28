@@ -37,7 +37,21 @@ export default function Fixture({ session }) {
   const [saved, setSaved] = useState(false)
   const [dbPartidos, setDbPartidos] = useState([])
 
-  const todosLosPartidos = [...PARTIDOS_GRUPOS, ...PARTIDOS_ELIMINATORIOS]
+  // Grupos: del fixture estatico. Eliminatorias: de la base (se completan
+  // solas a medida que el proveedor define los cruces).
+  const eliminatoriasDB = dbPartidos
+    .filter((p) => p.fase !== 'Grupos')
+    .map((p) => ({
+      id: p.id,
+      fase: p.fase,
+      local: p.equipo_local,
+      visitante: p.equipo_visitante,
+      flagLocal: p.flag_local,
+      flagVisitante: p.flag_visitante,
+      fecha: p.fecha,
+    }))
+    .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+  const todosLosPartidos = [...PARTIDOS_GRUPOS, ...PARTIDOS_ELIMINATORIOS, ...eliminatoriasDB]
 
   useEffect(() => {
     if (session?.user) {

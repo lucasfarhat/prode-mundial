@@ -10,7 +10,20 @@ export default function Admin() {
   const [fase, setFase] = useState('Grupos')
   const [msg, setMsg] = useState('')
 
-  const todosLosPartidos = [...PARTIDOS_GRUPOS, ...PARTIDOS_ELIMINATORIOS]
+  // Grupos del fixture estatico; eliminatorias de la base (se cargan solas)
+  const eliminatoriasDB = partidos
+    .filter((p) => p.fase !== 'Grupos')
+    .map((p) => ({
+      id: p.id,
+      fase: p.fase,
+      local: p.equipo_local,
+      visitante: p.equipo_visitante,
+      flagLocal: p.flag_local,
+      flagVisitante: p.flag_visitante,
+      fecha: p.fecha,
+    }))
+    .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+  const todosLosPartidos = [...PARTIDOS_GRUPOS, ...PARTIDOS_ELIMINATORIOS, ...eliminatoriasDB]
 
   useEffect(() => {
     supabase.from('partidos').select('*').then(({ data }) => {
