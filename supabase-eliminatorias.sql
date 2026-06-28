@@ -2,7 +2,7 @@
 -- ELIMINATORIAS AUTOMATICAS — Mundial 2026
 -- Ya aplicado en la base. Documenta como esta armado.
 --
--- Las eliminatorias (R32/R16/QF/SF/F) NO estan en src/lib/fixture.js:
+-- Las eliminatorias (R32/R16/QF/SF/3er/F) NO estan en src/lib/fixture.js:
 -- viven en la tabla public.partidos y se cargan/actualizan solas desde
 -- football-data.org. El front (Fixture.jsx / Admin.jsx) las lee de la base.
 --
@@ -56,8 +56,8 @@ begin
     v_fase := case v_m->>'stage'
                 when 'LAST_32' then 'R32' when 'LAST_16' then 'R16'
                 when 'QUARTER_FINALS' then 'QF' when 'SEMI_FINALS' then 'SF'
-                when 'FINAL' then 'F' else null end;
-    if v_fase is null then continue; end if; -- ignora grupos y 3er puesto
+                when 'THIRD_PLACE' then '3er' when 'FINAL' then 'F' else null end;
+    if v_fase is null then continue; end if; -- ignora solo la fase de grupos
 
     v_ext := v_m->>'id';
     v_fecha := (v_m->>'utcDate')::timestamptz;

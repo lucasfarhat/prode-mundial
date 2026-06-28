@@ -13,3 +13,4 @@ inspect_table.mjs
 diag.mjs
 diag0.mjs
 fix_sync.mjs
+_conn.mjs

@@ -9,6 +9,7 @@ const FASES = [
   { id: 'R16', label: 'Octavos' },
   { id: 'QF', label: 'Cuartos' },
   { id: 'SF', label: 'Semis' },
+  { id: '3er', label: '3er puesto' },
   { id: 'F', label: 'Final' },
 ]
 
