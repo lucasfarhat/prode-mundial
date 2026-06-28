@@ -10,6 +10,12 @@
 --      trae los partidos TERMINADOS y carga el resultado en los que falten.
 --   4. El trigger trg_calcular_puntos reparte los puntos automaticamente.
 --
+-- PENALES (eliminatorias): el resultado que se carga es el del FINAL DEL ALARGUE
+-- (regularTime + extraTime), NO los penales. football-data mete los penales en
+-- score.fullTime (ej: 1-1 que se define 4-3 por penales aparece como fullTime 5-4),
+-- por eso cuando score.duration = 'PENALTY_SHOOTOUT' se usa regularTime+extraTime,
+-- que siempre es empate. Asi, el que eligio al ganador por penales NO suma punto.
+--
 -- La API key NO esta en este archivo: se guarda en private.secrets
 -- (esquema no expuesto por la API publica). Para setearla/rotarla:
 --   insert into private.secrets(name, value) values ('footballdata_key', 'TU_KEY')
@@ -42,6 +48,9 @@ declare
   v_updated int := 0;
   v_pending int;
   v_intento int;
+  v_dur text;
+  v_home int;
+  v_away int;
 begin
   -- Solo llama a la API si hay partidos que ya deberian haber terminado
   -- y siguen sin resultado (ahorra llamadas fuera de los dias de partido).
@@ -80,13 +89,25 @@ begin
 
   for v_m in select value from jsonb_array_elements((v_resp.content::jsonb) -> 'matches')
   loop
-    if (v_m->>'status') = 'FINISHED' and (v_m #>> '{score,fullTime,home}') is not null then
-      update public.partidos p
-      set resultado_local = (v_m #>> '{score,fullTime,home}')::int,
-          resultado_visitante = (v_m #>> '{score,fullTime,away}')::int,
-          jugado = true
-      where p.external_id = (v_m ->> 'id') and p.jugado = false;
-      if found then v_updated := v_updated + 1; end if;
+    if (v_m->>'status') = 'FINISHED' then
+      v_dur := v_m #>> '{score,duration}';
+      -- Definido por penales: contar el resultado de fin de alargue (empate), sin penales
+      if v_dur = 'PENALTY_SHOOTOUT' then
+        v_home := coalesce((v_m #>> '{score,regularTime,home}')::int,0) + coalesce((v_m #>> '{score,extraTime,home}')::int,0);
+        v_away := coalesce((v_m #>> '{score,regularTime,away}')::int,0) + coalesce((v_m #>> '{score,extraTime,away}')::int,0);
+      else
+        v_home := (v_m #>> '{score,fullTime,home}')::int;
+        v_away := (v_m #>> '{score,fullTime,away}')::int;
+      end if;
+
+      if v_home is not null and v_away is not null then
+        update public.partidos p
+        set resultado_local = v_home,
+            resultado_visitante = v_away,
+            jugado = true
+        where p.external_id = (v_m ->> 'id') and p.jugado = false;
+        if found then v_updated := v_updated + 1; end if;
+      end if;
     end if;
   end loop;
   return v_updated;
