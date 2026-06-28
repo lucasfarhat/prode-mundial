@@ -77,20 +77,25 @@ export async function getPartidos() {
 
 // --- TABLA DE POSICIONES ---
 
-// Desempate manual: cuando dos quedan iguales en puntos, exactos y diferencia,
-// este orden define quién va primero (mayor número = más arriba).
-const PRIORIDAD_DESEMPATE = {
-  // Maria Guillermina Beltran va antes que Aoun Made en caso de empate total
-  '547e4e20-c6b9-438f-a55b-a8ee98493d61': 1,
-}
+// Desempate manual: si Maria Guillermina Beltran y Aoun Made quedan con los MISMOS
+// puntos, Maria va primero (aunque Aoun tenga mejor diferencia de goles).
+const ID_MARIA = '547e4e20-c6b9-438f-a55b-a8ee98493d61'
+const ID_AOUN = '6ce03f03-f5a4-4232-b671-915c8921f24c'
 
 function ordenarTabla(data) {
-  return (data || []).slice().sort((a, b) =>
+  const arr = (data || []).slice().sort((a, b) =>
     b.puntos - a.puntos ||
     b.exactos - a.exactos ||
-    a.diferencia_total - b.diferencia_total ||
-    (PRIORIDAD_DESEMPATE[b.user_id] || 0) - (PRIORIDAD_DESEMPATE[a.user_id] || 0)
+    a.diferencia_total - b.diferencia_total
   )
+  // Si empatan en puntos y Maria quedo debajo de Aoun, subo a Maria arriba de Aoun
+  const iAoun = arr.findIndex((x) => x.user_id === ID_AOUN)
+  const iMaria = arr.findIndex((x) => x.user_id === ID_MARIA)
+  if (iAoun !== -1 && iMaria !== -1 && iMaria > iAoun && arr[iMaria].puntos === arr[iAoun].puntos) {
+    const [maria] = arr.splice(iMaria, 1)
+    arr.splice(iAoun, 0, maria)
+  }
+  return arr
 }
 
 export async function getTablaPosiciones() {
