@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase, guardarPronostico, getPronosticosUsuario } from '../lib/supabase'
 import { PARTIDOS_GRUPOS, PARTIDOS_ELIMINATORIOS } from '../lib/fixture'
 import Flag from '../components/Flag'
@@ -37,6 +37,7 @@ export default function Fixture({ session }) {
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [dbPartidos, setDbPartidos] = useState([])
+  const faseInicializada = useRef(false)
 
   // Grupos: del fixture estatico. Eliminatorias: de la base (se completan
   // solas a medida que el proveedor define los cruces).
@@ -69,6 +70,16 @@ export default function Fixture({ session }) {
       if (data?.length) setDbPartidos(data)
     })
   }, [session])
+
+  // Al cargar, posicionarse en la fase EN CURSO (la primera con partidos sin jugar).
+  // Solo una vez, para no pisar la pestaña que el usuario elija después.
+  useEffect(() => {
+    if (faseInicializada.current || !dbPartidos.length) return
+    faseInicializada.current = true
+    const orden = FASES.map((f) => f.id)
+    const activa = orden.find((f) => dbPartidos.some((p) => p.fase === f && !p.jugado))
+    if (activa && activa !== 'Grupos') setFase(activa)
+  }, [dbPartidos])
 
   function handleScore(partidoId, side, val) {
     const num = val === '' ? '' : Math.max(0, Math.min(20, parseInt(val) || 0))
